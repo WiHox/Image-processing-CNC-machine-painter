@@ -1,5 +1,5 @@
 class UserInput:
-  def __init__(self, NV, NE, SE, SV, grosime, pauza, pas, viteza):
+  def __init__(self, NV, NE, SE, SV, grosime, pauza, pas, viteza, distantaVopsire):
       self.NV = NV
       self.NE = NE
       self.SE = SE 
@@ -8,3 +8,4 @@ class UserInput:
       self.pauza = pauza 
       self.pas = pas 
       self.viteza = viteza
+      self.distantaVopsire = distantaVopsire

@@ -37,9 +37,6 @@ def getBiggestContour(image):
 
     cv.drawContours(original_image, [largest_item], -1, (0, 0, 225), 5)
 
-    cv.imshow('Largest Object', original_image)
-    cv.waitKey(0)
-
     epsilon = 0.04 * cv.arcLength(largest_item, True)
     largest_item = cv.approxPolyDP(largest_item, epsilon, True)
 

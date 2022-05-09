@@ -1,11 +1,5 @@
-from sqlite3 import Row
-from tkinter import filedialog
-from tkinter.filedialog import SaveAs
-from tkinter.tix import COLUMN
 import cv2 as cv
-
 from cv2 import ROTATE_90_COUNTERCLOCKWISE
-import numpy as np 
 import tkinter as tk
 from tkinter import *
 from PIL import Image,ImageTk
@@ -21,7 +15,8 @@ nameOfFile, pathToImage = setPath()
 realityToPixelsRatioX = 1.37
 realityToPixelsRatioY = 1.47
 constantHeight = 4
-inaltimeMasa = -328
+inaltimeMasa = -325
+inaltimeVopsireSarpe = -25 
 
 #This method gets the picture of the object and returns the image and the boxing
 def takePictureAndReturnCoordinates():
@@ -36,8 +31,6 @@ def takePictureAndReturnCoordinates():
 
     image = cv.resize(image, [393,700], interpolation = cv.INTER_AREA)
     
-    cv.imshow("sorin", image)
-    cv.waitKey(0)
     cv.imwrite(nameOfFile, image)
     return box
 
@@ -156,7 +149,7 @@ def startGUI():
 
     pasEntry = tk.Entry(win, width=20, bg='white')
     pasEntry.place(anchor=N, relx=0.65, rely=0.604)
-    pasEntry.insert(-1, 10)
+    pasEntry.insert(-1, 8)
 
     inCM2 = tk.Label(win,text =' in centrimetri', font='Helvetica 8 bold')
     inCM2.place(anchor=N, relx=0.75, rely=0.6)
@@ -168,19 +161,28 @@ def startGUI():
 
     vitezaEntry = tk.Entry(win, width=20, bg='white')
     vitezaEntry.place(anchor=N, relx=0.65, rely=0.704)
-    vitezaEntry.insert(-1, 500)
+    vitezaEntry.insert(-1, 2000)
 
     ms = tk.Label(win,text =' in milimetrii pe minut', font='Helvetica 8 bold')
     ms.place(anchor=N, relx=0.765, rely=0.7)
 
+
+    distantaVopsire = tk.Label(win,text ='Distanta vopsire:', font='Helvetica 12 bold', justify=LEFT)
+    distantaVopsire.place(anchor=N, relx=0.53, rely=0.8)
+
+    distantaVopsireEntry = tk.Entry(win, width=20, bg='white')
+    distantaVopsireEntry.place(anchor=N, relx=0.65, rely=0.804)
+    distantaVopsireEntry.insert(-1, 30)
+
+    cm = tk.Label(win,text =' in cm', font='Helvetica 8 bold')
+    cm.place(anchor=N, relx=0.73, rely=0.8)
+
     B = tk.Button(win, text ="Re-Photo", command = lambda:openPic(label, stCornerEntry, ndCornerEntry, rdCornerEntry, thCornerEntry))
     B.place(x=200,y=760,width=100,height=25)
 
-    #Initializare obiect rdCornerEntry
+    #Initializare obiect
 
-    dateUser = UserInput(stCornerEntry.get(), ndCornerEntry.get(), rdCornerEntry.get(), thCornerEntry.get(), depthEntry.get(), pauseEntry.get(), pasEntry.get(), vitezaEntry.get())
-
-    B = tk.Button(win, text ="Genereaza fisier comanda", command = lambda:generateCommandFile(dateUser))
+    B = tk.Button(win, text ="Genereaza fisier comanda", command = lambda:generateCommandFile(stCornerEntry, ndCornerEntry, rdCornerEntry, thCornerEntry, depthEntry, pauseEntry, pasEntry, vitezaEntry, distantaVopsireEntry))
     B.place(x=750,y=730,width=150,height=30)
 
     win.mainloop()

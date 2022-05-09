@@ -2,16 +2,18 @@ import time
 from tkinter import filedialog, messagebox
 
 from GCode import generateGCode
+from inputObj import UserInput
 
 
-def generateCommandFile(UserInputObj):
+def generateCommandFile(stCornerEntry, ndCornerEntry, rdCornerEntry, thCornerEntry, depthEntry, pauseEntry, pasEntry, vitezaEntry, distantaVopsireEntry):
     
-    testCorrectInput(UserInputObj)
+    
+    dateUser = UserInput(stCornerEntry.get(), ndCornerEntry.get(), rdCornerEntry.get(), thCornerEntry.get(), depthEntry.get(), pauseEntry.get(), pasEntry.get(), vitezaEntry.get(), distantaVopsireEntry.get())
+    testCorrectInput(dateUser)
     nameOfTheFileToWriteIn = generateFileName()
     f = open(nameOfTheFileToWriteIn, "a+")
     
-    generatedGCode = generateGCode(UserInputObj)
-    f.write(generatedGCode)
+    generateGCode(dateUser, f)
     f.close()
 
     messagebox.showinfo("Success", "Fisierul a fost salvat")
@@ -26,14 +28,7 @@ def testCorrectInput(UserInputObj):
 
 
 def generateFileName():
-    nameOfTheFile = "//FisierVopsire-" + time.strftime("%Y-%m-%d-%H-%M-%S") + ".txt"
+    nameOfTheFile = "//FisierVopsire-" + time.strftime("%Y-%m-%d-%H-%M-%S") + ".tap"
     path = filedialog.askdirectory(initialdir="/", title="Select file")
     nameOfTheFileToWriteIn = path + nameOfTheFile
     return nameOfTheFileToWriteIn
-
-
-#G01 Move x y z f
-#G00 rapid move 
-#G21 milimeters 
-#G28 return home 
-#M00 – Program stop
